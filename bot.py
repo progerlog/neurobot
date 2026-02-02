@@ -74,7 +74,7 @@ async def send_news():
         text = request_agent(PROMPT, PARENT_MESSAGE_ID)
         final_text = (
             f"{text}\n\n" 
-            f'<a href="{CHANNEL_URL}"></a>'
+            f'<a href="{CHANNEL_URL}">Подписаться на канал 🔥</a>'
         )
         if text:
             await bot.send_message(chat_id="-1003713022349", text=final_text, parse_mode="HTML",
