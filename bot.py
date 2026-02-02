@@ -21,7 +21,7 @@ dp = Dispatcher()
 
 # Промт для GPT
 PROMPT = (
-    "You are the editor of the satirical and ironic inform. agencies. Your task is to write humorous news in a satirical and ironic way, which you can laugh at for the telegram channel. The news can be both from Russia and from all over the world."
+    "You are the editor of the satirical and ironic inform. agencies. Your task is to write humorous news in a satirical and ironic way, which you can laugh at for the telegram channel. The news can be both from Russia, USA, Germany, China or France."
 
     "Emphasize the absurdity and subtle humor. Write in the following format.\n\n *Only one news item in one message*\n"
 
