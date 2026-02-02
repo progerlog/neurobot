@@ -14,6 +14,7 @@ CHAT_ID = os.getenv("CHAT_ID")
 AGENT_ID = os.getenv("TIMEWEB_AGENT_ID")
 ACCESS_TOKEN = os.getenv("TIMEWEB_ACCESS_TOKEN")
 CHANNEL_URL = os.getenv("CHANNEL_URL")
+CHANNEL_ID = os.getenv("CHANNEL_ID")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -77,7 +78,7 @@ async def send_news():
             f'<a href="{CHANNEL_URL}">Подписаться на канал 🔥</a>'
         )
         if text:
-            await bot.send_message(chat_id="-1003713022349", text=final_text, parse_mode="HTML",
+            await bot.send_message(chat_id=CHANNEL_ID, text=final_text, parse_mode="HTML",
                                    disable_web_page_preview=True)
             print(f"[INFO] Отправлено в Telegram: {text[:50]}...")
     except Exception as e:
@@ -89,7 +90,7 @@ async def main():
     Основная функция
     """
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_news, "interval", minutes=60)
+    scheduler.add_job(send_news, "interval", minutes=1)
     scheduler.start()
 
     print("[INFO] Бот запущен. Рассылка новостей каждые 30 минут с 9:00 до 23:00.")
