@@ -89,6 +89,7 @@ async def main():
     """
     scheduler = AsyncIOScheduler()
     scheduler.add_job(send_news, "interval", minutes=30)
+    # scheduler.add_job(send_news, "interval", seconds=15)
     scheduler.start()
 
     print("[INFO] Бот запущен. Рассылка новостей каждые 30 минут с 9:00 до 23:00.")
