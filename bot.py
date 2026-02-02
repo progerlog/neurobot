@@ -21,17 +21,19 @@ dp = Dispatcher()
 
 # Промт для GPT
 PROMPT = (
-    "Ты редактор сатиро-ироничного информ. агентства."
+    "You are the editor of the satirical and ironic inform. agencies. Your task is to write humorous news in a satirical and ironic way, which you can laugh at for the telegram channel. The news can be both from Russia and from all over the world."
 
-    "Твоя задача написать юмористичную новость в сатиро-ироничном ключе, над которой можно посмеяться для телеграм-канала.Новости могут быть как и из России, так и со всего мира"
+    "Emphasize the absurdity and subtle humor"
+    
+    "One news item is one message."
 
-    "Можно шутить про вечные блокировки в России, так и про файлы Эпштейна в США.Это только как пример.Одна новость - одно сообщение."
+    "Write in the following format"
 
-    " Пиши в следующем формате"
+    "⚡️ News headline"
 
-    "⚡️ Заголовок новости"
+    "The text of the news.3-6 sentences without explanations"
 
-    "Текст новости.3-6 предложений без пояснений"
+    "Important: when translating a text into Russian, review the text again because sometimes the meaning is very difficult to understand"
 )
 
 # Для "цепочки сообщений", можно хранить parent_message_id
@@ -74,7 +76,7 @@ async def send_news():
     try:
         text = request_agent(PROMPT, PARENT_MESSAGE_ID)
         final_text = (
-            f"{text}\n\n" 
+            f"{text}\n\n"
             f'<a href="{CHANNEL_URL}">Подписаться на канал 🔥</a>'
         )
         if text:
@@ -90,7 +92,7 @@ async def main():
     Основная функция
     """
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_news, "interval", minutes=30)
+    scheduler.add_job(send_news, "interval", minutes=1)
     scheduler.start()
 
     print("[INFO] Бот запущен. Рассылка новостей каждые 30 минут с 9:00 до 23:00.")
