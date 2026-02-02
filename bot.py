@@ -13,18 +13,29 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 AGENT_ID = os.getenv("TIMEWEB_AGENT_ID")
 ACCESS_TOKEN = os.getenv("TIMEWEB_ACCESS_TOKEN")
+CHANNEL_URL = os.getenv("CHANNEL_URL")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 # Промт для GPT
 PROMPT = (
-    "Пришли абсурдную новость России или мира в сатирично-ироничном ключе. Одна новость - одно сообщение. В формате \n ⚡️ [Заголовок] Через строчку [Описание]"
-    "Коротко, 3–6 предложений. Без пояснений."
+    "Ты редактор сатиро-ироничного информ. агентства."
+
+    "Твоя задача написать юмористичную новость в сатиро-ироничном ключе, над которой можно посмеяться для телеграм-канала.Новости могут быть как и из России, так и со всего мира"
+
+    "Можно шутить про вечные блокировки в России, так и про файлы Эпштейна в США.Это только как пример.Одна новость - одно сообщение."
+
+    " Пиши в следующем формате"
+
+    "⚡️ Заголовок новости"
+
+    "Текст новости.3-6 предложений без пояснений"
 )
 
 # Для "цепочки сообщений", можно хранить parent_message_id
 PARENT_MESSAGE_ID = None
+
 
 def request_agent(prompt: str, parent_message_id: str = None) -> str:
     """
@@ -50,32 +61,40 @@ def request_agent(prompt: str, parent_message_id: str = None) -> str:
     # Возвращаем текст
     return data.get("message", "")
 
+
 async def send_news():
     """
     Отправка новости в Telegram
     """
     now_hour = datetime.now().hour
-    if not (9 <= now_hour < 23):
+    if not (11 <= now_hour < 21):
         return
 
     try:
         text = request_agent(PROMPT, PARENT_MESSAGE_ID)
+        final_text = (
+            f"{text}\n\n" 
+            f'<a href="{CHANNEL_URL}"></a>'
+        )
         if text:
-            await bot.send_message(chat_id="-1003713022349", text=text)
+            await bot.send_message(chat_id="-1003713022349", text=final_text, parse_mode="HTML",
+                                   disable_web_page_preview=True)
             print(f"[INFO] Отправлено в Telegram: {text[:50]}...")
     except Exception as e:
         print(f"[ERROR] Ошибка при запросе к Timeweb Agent: {e}")
+
 
 async def main():
     """
     Основная функция
     """
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_news, "interval", minutes=30)
+    scheduler.add_job(send_news, "interval", minutes=60)
     scheduler.start()
 
     print("[INFO] Бот запущен. Рассылка новостей каждые 30 минут с 9:00 до 23:00.")
     await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
