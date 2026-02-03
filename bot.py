@@ -40,6 +40,7 @@ def request_agent(prompt: str, parent_message_id: str = None) -> str:
     """
     Отправка запроса к Timeweb Agent (нативный API)
     """
+    now_time = datetime.now().strftime("%H:%M")
     url = f"https://api.timeweb.cloud/api/v1/cloud-ai/agents/{AGENT_ID}/call"
     headers = {
         "Authorization": f"Bearer {ACCESS_TOKEN}",
@@ -58,6 +59,7 @@ def request_agent(prompt: str, parent_message_id: str = None) -> str:
         global PARENT_MESSAGE_ID
         PARENT_MESSAGE_ID = new_parent_id
     # Возвращаем текст
+    print(f"[INFO][{now_time}] Запрос отработан")
     return data.get("message", "")
 
 
