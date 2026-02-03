@@ -66,6 +66,7 @@ async def send_news():
     Отправка новости в Telegram
     """
     now_hour = datetime.now().hour
+
     if not (11 <= now_hour < 21):
         return
 
@@ -87,12 +88,13 @@ async def main():
     """
     Основная функция
     """
+    now_time = datetime.now().strftime("%H:%M")
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_news, "interval", minutes=30)
+    scheduler.add_job(send_news, "interval", minutes=1)
     # scheduler.add_job(send_news, "interval", seconds=15)
     scheduler.start()
 
-    print("[INFO] Бот запущен. Рассылка новостей каждые 30 минут с 9:00 до 23:00.")
+    print(f"[INFO][{now_time}] Бот запущен. Рассылка новостей каждые 30 минут с 11:00 до 23:00.")
     await dp.start_polling(bot)
 
 
