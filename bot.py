@@ -66,8 +66,9 @@ async def send_news():
     Отправка новости в Telegram
     """
     now_hour = datetime.now().hour
+    now_time = datetime.now().strftime("%H:%M")
 
-    if not (11 <= now_hour < 21):
+    if not (5 <= now_hour < 23):
         return
 
     try:
@@ -79,9 +80,9 @@ async def send_news():
         if text:
             await bot.send_message(chat_id=CHANNEL_ID, text=final_text, parse_mode="HTML",
                                    disable_web_page_preview=True)
-            print(f"[INFO] Отправлено в Telegram: {text[:50]}...")
+            print(f"[INFO][{now_time}] Отправлено в Telegram: {text[:50]}...")
     except Exception as e:
-        print(f"[ERROR] Ошибка при запросе к Timeweb Agent: {e}")
+        print(f"[ERROR][{now_time}] Ошибка при запросе к Timeweb Agent: {e}")
 
 
 async def main():
