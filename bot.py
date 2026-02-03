@@ -70,10 +70,12 @@ async def send_news():
     now_hour = datetime.now().hour
     now_time = datetime.now().strftime("%H:%M")
 
-    if not (5 <= now_hour < 23):
+    if not (11 <= now_hour < 23):
+        print(f"[WARNING][{now_time}] БОТ не может быть запущен в это время")
         return
 
     try:
+        print(f"[INFO][{now_time}] БОТ отработает через 30 минут")
         text = request_agent(PROMPT, PARENT_MESSAGE_ID)
         final_text = (
             f"{text}\n\n"
