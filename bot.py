@@ -70,7 +70,7 @@ async def send_news():
     now_hour = datetime.now().hour
     now_time = datetime.now().strftime("%H:%M")
 
-    if not (14 <= now_hour < 23):
+    if not (5 <= now_hour < 20):
         print(f"[WARNING][{now_time}] БОТ не может быть запущен в это время")
         return
 
@@ -95,8 +95,8 @@ async def main():
     """
     now_time = datetime.now().strftime("%H:%M")
     scheduler = AsyncIOScheduler()
-    # scheduler.add_job(send_news, "interval", minutes=30)
-    scheduler.add_job(send_news, "interval", seconds=15)
+    scheduler.add_job(send_news, "interval", minutes=30)
+    # scheduler.add_job(send_news, "interval", seconds=15)
     scheduler.start()
 
     print(f"[INFO][{now_time}] Бот запущен. Рассылка новостей каждые 30 минут с 11:00 до 23:00.")
