@@ -93,7 +93,7 @@ async def main():
     """
     now_time = datetime.now().strftime("%H:%M")
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_news, "interval", minutes=1)
+    scheduler.add_job(send_news, "interval", minutes=30)
     # scheduler.add_job(send_news, "interval", seconds=15)
     scheduler.start()
 
