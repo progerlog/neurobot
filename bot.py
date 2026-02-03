@@ -27,7 +27,7 @@ PROMPT = (
 
     "⚡️ Post headline\n"
 
-    "The text of the news item. \n 3-6 sentences without explanations\n"
+    "The text of the news item. \n 2-3 sentences without explanations\n"
 
     "*Important: when translating a text into Russian, review the text again because sometimes the meaning is very difficult to understand*"
 )
